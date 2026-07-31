@@ -21,10 +21,10 @@
       background: rgba(255,255,255,.05);
       backdrop-filter: blur(15px);
       border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 25px;
+      padding: 16px;
+      margin-bottom: 16px;
     }
-    .card h2 { margin-bottom: 18px; color: #93c5fd; }
+    .card h2 { margin-bottom: 12px; color: #93c5fd; font-size: 18px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
     input, select, textarea {
       width: 100%; padding: 13px; border: none; outline: none; border-radius: 12px;
@@ -33,15 +33,16 @@
     input::placeholder { color: #9ca3af; }
     label { display: block; margin-bottom: 8px; font-size: 14px; color: #cbd5e1; }
     .result-box {
-      margin-top: 20px; background: #111827; border-radius: 15px; padding: 20px;
+      margin-top: 16px; background: #111827; border-radius: 14px; padding: 16px;
     }
-    .result-box h3 { margin-bottom: 15px; }
-    #medicineList { display: flex; flex-direction: column; gap: 10px; }
-    .medicine { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 10px; background: #1f2937; }
-    .medicine-block { background: #1f2937; border-radius: 10px; padding: 12px; }
-    .medicine-block h4 { margin-bottom: 8px; color: #93c5fd; font-size: 15px; }
-    .disease-row { display: flex; gap: 10px; margin-bottom: 10px; }
-    .total { margin-top: 20px; font-size: 28px; font-weight: 700; color: #4ade80; }
+    .result-box h3 { margin-bottom: 10px; font-size: 16px; }
+    #medicineList { display: flex; flex-direction: column; gap: 8px; }
+    .medicine { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-radius: 10px; background: #1f2937; }
+    .medicine-block { background: #1f2937; border-radius: 10px; padding: 10px; }
+    .medicine-block h4 { margin-bottom: 6px; color: #93c5fd; font-size: 14px; }
+    .disease-row { display: flex; gap: 8px; margin-bottom: 8px; }
+    .total { margin-top: 10px; font-size: 22px; font-weight: 700; color: #4ade80; }
+    .summary-strip { margin-top: 6px; font-size: 14px; color: #cbd5e1; }
     .actions { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 12px; }
     button {
       padding: 13px 20px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: .2s;
@@ -51,7 +52,7 @@
     .btn-success { background: #16a34a; color: white; }
     .btn-danger { background: #dc2626; color: white; }
     .btn-dark { background: #374151; color: white; }
-    textarea { margin-top: 20px; height: 220px; background: #0f172a; color: white; resize: none; }
+    textarea { margin-top: 12px; height: 180px; background: #0f172a; color: white; resize: none; }
     table { width: 100%; border-collapse: collapse; margin-top: 10px; }
     th, td { border: 1px solid #334155; padding: 10px; text-align: left; font-size: 13px; }
     th { background: #1f2937; }
@@ -112,25 +113,11 @@
 
     <div class="result-box">
       <div class="card">
-        <h2>📋 Riwayat Tindakan Medis</h2>
-        <table id="historyTable">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Tanggal</th>
-              <th>Pegawai</th>
-              <th>Pasien</th>
-              <th>Diagnosis</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
 
       <h3>Daftar Penyakit & Obat</h3>
       <div id="medicineList">Belum ada penyakit dipilih.</div>
       <div class="total" id="totalPrice">Total : $0</div>
+      <div class="summary-strip" id="medicineCountSummary">Total obat keluar: 0 item</div>
       <textarea id="hasil" readonly placeholder="Ringkasan tindakan medis akan muncul di sini..."></textarea>
 
       <div class="actions">
@@ -170,7 +157,7 @@
     const totalPrice = document.getElementById("totalPrice");
     const hasil = document.getElementById("hasil");
     const historyTableBody = document.querySelector("#historyTable tbody");
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1532706114184020058/QBK_ct9S01OF1wWb7vyqM-wWekDvLFLCw0J1RpZMZPtiwq303uuv8_6CsQ8G5yVX7HK-";
+    const WEBHOOK_URL = "https://canary.discord.com/api/webhooks/1532706114184020058/QBK_ct9S01OF1wWb7vyqM-wWekDvLFLCw0J1RpZMZPtiwq303uuv8_6CsQ8G5yVX7HK-";
 
     function createDiseaseRow(selectedValue = "") {
       const row = document.createElement("div");
@@ -210,6 +197,7 @@
       medicineList.innerHTML = "";
       hasil.value = "";
       totalPrice.textContent = "Total : $0";
+      document.getElementById("medicineCountSummary").textContent = "Total obat keluar: 0 item";
 
       if (!selectedDiseases.length) {
         medicineList.innerHTML = "Belum ada penyakit dipilih.";
@@ -217,6 +205,7 @@
       }
 
       let total = 0;
+      let totalItems = 0;
       let report = "===== DATA MEDIS =====\n\n";
       report += "Daftar penyakit yang dipilih :\n";
 
@@ -230,6 +219,7 @@
 
         items.forEach((item) => {
           total += item.price;
+          totalItems += parseInt(item.qty) || 1;
           medicineList.innerHTML += `
             <div class="medicine">
               <div>
@@ -247,9 +237,11 @@
       });
 
       report += "\n--------------------------------\n";
+      report += `TOTAL OBAT KELUAR : ${totalItems} item\n`;
       report += `TOTAL BIAYA : $${total}`;
 
       totalPrice.textContent = `Total : $${total}`;
+      document.getElementById("medicineCountSummary").textContent = `Total obat keluar: ${totalItems} item`;
       hasil.value = report;
     }
 
