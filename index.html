@@ -1,908 +1,389 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Medical Calculator EMS</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
-body{
-
-background:
-radial-gradient(circle at top,#1d4ed8,#111827 45%,#030712);
-
-color:#fff;
-min-height:100vh;
-padding:30px;
-
-}
-
-.container{
-
-max-width:1200px;
-margin:auto;
-
-}
-
-.header{
-
-text-align:center;
-margin-bottom:30px;
-
-}
-
-.header h1{
-
-font-size:46px;
-font-weight:700;
-
-}
-
-.header p{
-
-color:#cbd5e1;
-margin-top:8px;
-
-}
-
-.card{
-
-background:rgba(255,255,255,.05);
-backdrop-filter:blur(15px);
-border-radius:18px;
-padding:20px;
-margin-bottom:25px;
-
-}
-
-.card h2{
-
-margin-bottom:18px;
-color:#93c5fd;
-
-}
-
-.grid{
-
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-
-}
-
-input,select{
-
-width:100%;
-padding:13px;
-border:none;
-outline:none;
-border-radius:12px;
-background:#1f2937;
-color:white;
-font-size:14px;
-
-}
-
-input::placeholder{
-
-color:#9ca3af;
-
-}
-
-label{
-
-display:block;
-margin-bottom:8px;
-font-size:14px;
-color:#cbd5e1;
-
-}
-
-
-
-.result-box{
-
-margin-top:20px;
-background:#111827;
-border-radius:15px;
-padding:20px;
-
-}
-
-.result-box h3{
-
-margin-bottom:15px;
-
-}
-
-#medicineList{
-
-display:flex;
-flex-direction:column;
-gap:10px;
-
-}
-
-.medicine{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:12px;
-border-radius:10px;
-background:#1f2937;
-
-}
-
-.total{
-
-margin-top:20px;
-font-size:28px;
-font-weight:700;
-color:#4ade80;
-
-}
-
-.actions{
-
-margin-top:25px;
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-
-}
-
-button{
-
-padding:13px 20px;
-border:none;
-border-radius:12px;
-cursor:pointer;
-font-weight:600;
-font-size:14px;
-transition:.2s;
-
-}
-
-button:hover{
-
-transform:translateY(-2px);
-
-}
-
-.btn-primary{
-
-background:#2563eb;
-color:white;
-
-}
-
-.btn-success{
-
-background:#16a34a;
-color:white;
-
-}
-
-.btn-danger{
-
-background:#dc2626;
-color:white;
-
-}
-
-.btn-dark{
-
-background:#374151;
-color:white;
-
-}
-
-textarea{
-
-margin-top:20px;
-width:100%;
-height:220px;
-background:#0f172a;
-color:white;
-border:none;
-border-radius:15px;
-padding:15px;
-resize:none;
-
-}
-
-@media(max-width:768px){
-
-.header h1{
-
-font-size:34px;
-
-}
-
-.actions{
-
-flex-direction:column;
-
-}
-
-button{
-
-width:100%;
-
-}
-
-}
-
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Medical Calculator EMS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      background: radial-gradient(circle at top, #1d4ed8, #111827 45%, #030712);
+      color: #fff;
+      min-height: 100vh;
+      padding: 30px;
+    }
+    .container { max-width: 1200px; margin: auto; }
+    .header { text-align: center; margin-bottom: 30px; }
+    .header h1 { font-size: 46px; font-weight: 700; }
+    .header p { color: #cbd5e1; margin-top: 8px; }
+    .card {
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(15px);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+    .card h2 { margin-bottom: 18px; color: #93c5fd; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+    input, select, textarea {
+      width: 100%; padding: 13px; border: none; outline: none; border-radius: 12px;
+      background: #1f2937; color: white; font-size: 14px;
+    }
+    input::placeholder { color: #9ca3af; }
+    label { display: block; margin-bottom: 8px; font-size: 14px; color: #cbd5e1; }
+    .result-box {
+      margin-top: 20px; background: #111827; border-radius: 15px; padding: 20px;
+    }
+    .result-box h3 { margin-bottom: 15px; }
+    #medicineList { display: flex; flex-direction: column; gap: 10px; }
+    .medicine { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 10px; background: #1f2937; }
+    .medicine-block { background: #1f2937; border-radius: 10px; padding: 12px; }
+    .medicine-block h4 { margin-bottom: 8px; color: #93c5fd; font-size: 15px; }
+    .disease-row { display: flex; gap: 10px; margin-bottom: 10px; }
+    .total { margin-top: 20px; font-size: 28px; font-weight: 700; color: #4ade80; }
+    .actions { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 12px; }
+    button {
+      padding: 13px 20px; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 14px; transition: .2s;
+    }
+    button:hover { transform: translateY(-2px); }
+    .btn-primary { background: #2563eb; color: white; }
+    .btn-success { background: #16a34a; color: white; }
+    .btn-danger { background: #dc2626; color: white; }
+    .btn-dark { background: #374151; color: white; }
+    textarea { margin-top: 20px; height: 220px; background: #0f172a; color: white; resize: none; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #334155; padding: 10px; text-align: left; font-size: 13px; }
+    th { background: #1f2937; }
+    @media (max-width: 768px) {
+      .header h1 { font-size: 34px; }
+      .actions { flex-direction: column; }
+      button { width: 100%; }
+      .disease-row { flex-direction: column; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <div class="header">
+      <h1>🏥 Medical Calculator EMS</h1>
+      <p>Pendataan Penanganan Medis Pasien</p>
+    </div>
 
-<div class="container">
-
-<div class="header">
-
-<h1>🏥 Medical Calculator EMS</h1>
-
-<p>
-Pendataan Penanganan Medis Pasien
-</p>
-
-</div>
-
-<!-- DATA PEGAWAI -->
-
-<div class="card">
-
-<h2>👨‍⚕️ Data Pegawai Medis</h2>
-
-<div class="grid">
-
-<div>
-
-<label>Nama Pegawai</label>
-
-<input
-type="text"
-id="pegawai"
-placeholder="Nama Pegawai">
-
-</div>
-
-<div>
-
-<label>Jabatan</label>
-
-<input
-type="text"
-id="jabatan"
-placeholder="Dokter / Paramedis">
-
-</div>
-
-<div>
-
-<label>Badge ID</label>
-
-<input
-type="text"
-id="badge"
-placeholder="EMS-001">
-
-</div>
-
-</div>
-
-</div>
-
-<!-- DATA PASIEN -->
-
-<div class="card">
-
-<h2>🧑 Data Pasien</h2>
-
-<div class="grid">
-
-<div>
-
-<label>Nama Pasien</label>
-
-<input
-type="text"
-id="pasien"
-placeholder="Nama Pasien">
-
-</div>
-
-<div>
-
-<label>Nomor Telepon</label>
-
-<input
-type="text"
-id="telepon"
-placeholder="08xxxxxxxxxx">
-
-</div>
-
-</div>
-
-</div>
-
-<!-- PENYAKIT -->
-
-<div class="card">
-
-<h2>🩺 Diagnosis</h2>
-
-<label>Pilih Penyakit</label>
-
-<select id="diseaseSelect">
-
-<option value="">-- Pilih Penyakit --</option>
-
-</select>
-
-<div class="result-box">
     <div class="card">
+      <h2>👨‍⚕️ Data Pegawai Medis</h2>
+      <div class="grid">
+        <div>
+          <label>Nama Pegawai</label>
+          <input type="text" id="pegawai" placeholder="Nama Pegawai" />
+        </div>
+        <div>
+          <label>Jabatan</label>
+          <input type="text" id="jabatan" placeholder="Dokter / Paramedis" />
+        </div>
+        <div>
+          <label>Badge ID</label>
+          <input type="text" id="badge" placeholder="EMS-001" />
+        </div>
+      </div>
+    </div>
 
-<h2>📋 Riwayat Tindakan Medis</h2>
+    <div class="card">
+      <h2>🧑 Data Pasien</h2>
+      <div class="grid">
+        <div>
+          <label>Nama Pasien</label>
+          <input type="text" id="pasien" placeholder="Nama Pasien" />
+        </div>
+        <div>
+          <label>Nomor Telepon</label>
+          <input type="text" id="telepon" placeholder="08xxxxxxxxxx" />
+        </div>
+      </div>
+    </div>
 
-<table id="historyTable">
+    <div class="card">
+      <h2>🩺 Diagnosis</h2>
+      <div id="diseaseRows"></div>
+      <div class="actions">
+        <button class="btn-primary" type="button" onclick="addDiseaseRow()">+ Tambah Penyakit</button>
+      </div>
+    </div>
 
-<thead>
+    <div class="result-box">
+      <div class="card">
+        <h2>📋 Riwayat Tindakan Medis</h2>
+        <table id="historyTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Tanggal</th>
+              <th>Pegawai</th>
+              <th>Pasien</th>
+              <th>Diagnosis</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
 
-<tr>
+      <h3>Daftar Penyakit & Obat</h3>
+      <div id="medicineList">Belum ada penyakit dipilih.</div>
+      <div class="total" id="totalPrice">Total : $0</div>
+      <textarea id="hasil" readonly placeholder="Ringkasan tindakan medis akan muncul di sini..."></textarea>
 
-<th>No</th>
-<th>Tanggal</th>
-<th>Pegawai</th>
-<th>Pasien</th>
-<th>Diagnosis</th>
-<th>Total</th>
-<th>Aksi</th>
+      <div class="actions">
+        <button class="btn-primary" onclick="copyResult()">Copy</button>
+        <button class="btn-success" onclick="window.print()">Print</button>
+        <button class="btn-danger" onclick="resetForm()">Reset</button>
+        <button class="btn-dark" onclick="sendDiscord()">Discord</button>
+      </div>
+    </div>
+  </div>
 
-</tr>
+  <script>
+    const diseases = {
+      "Water Aspiration (Aspirasi Air)": [
+        { name: "Medical Kit", qty: "1 Unit", price: 15 },
+        { name: "Cyclonamine", qty: "1 Unit", price: 5 }
+      ],
+      "Massive Trauma (Trauma Hebat)": [
+        { name: "Blood Bag 500", qty: "1 Kantong", price: 10 },
+        { name: "Suture Kit", qty: "1 Set", price: 10 },
+        { name: "Morphine", qty: "2 Ampul / Tablet", price: 10 }
+      ],
+      "Red Rash (Ruam Merah)": [
+        { name: "Disinfectant", qty: "1 Botol", price: 5 },
+        { name: "Bandage", qty: "2 Lembar / Gulung", price: 10 }
+      ],
+      "Massive Trauma Leg (Trauma Kaki)": [
+        { name: "Suture Kit", qty: "1 Set", price: 10 }
+      ],
+      "Bruise (Memar)": [
+        { name: "Ointment", qty: "1 Tub", price: 10 }
+      ]
+    };
 
-</thead>
-
-<tbody>
-
-</tbody>
-
-</table>
-
-</div>
-
-<h3>Obat Yang Digunakan</h3>
-
-<div id="medicineList">
-
-Belum ada penyakit dipilih.
-
-</div>
-
-<div class="total" id="totalPrice">
-
-Total : $0
-
-</div>
-
-<textarea
-id="hasil"
-readonly
-placeholder="Ringkasan tindakan medis akan muncul di sini..."></textarea>
-
-<div class="actions">
-
-<button
-class="btn-primary"
-onclick="copyResult()">
-Copy
-</button>
-
-<button
-class="btn-success"
-onclick="window.print()">
-Print
-</button>
-
-<button
-class="btn-danger"
-onclick="resetForm()">
-Reset
-</button>
-
-<button
-class="btn-dark"
-onclick="sendDiscord()">
-Discord
-</button>
-
-</div>
-
-</div>
-
-</div>
-<script>
-const diseases = {
-
-"Water Aspiration (Aspirasi Air)": [
-{
-name:"Medical Kit",
-qty:"1 Unit",
-price:15
-},
-{
-name:"Cyclonamine",
-qty:"1 Unit",
-price:5
-}
-],
-
-"Massive Trauma (Trauma Hebat)": [
-{
-name:"Blood Bag 500",
-qty:"1 Kantong",
-price:10
-},
-{
-name:"Suture Kit",
-qty:"1 Set",
-price:10
-},
-{
-name:"Morphine",
-qty:"2 Ampul / Tablet",
-price:10
-}
-],
-
-"Red Rash (Ruam Merah)": [
-{
-name:"Disinfectant",
-qty:"1 Botol",
-price:5
-},
-{
-name:"Bandage",
-qty:"2 Lembar / Gulung",
-price:10
-}
-],
-
-"Massive Trauma Leg (Trauma Kaki)": [
-{
-name:"Suture Kit",
-qty:"1 Set",
-price:10
-}
-],
-
-"Bruise (Memar)": [
-{
-name:"Ointment",
-qty:"1 Tub",
-price:10
-}
-]
-
-};
-
-const diseaseSelect=document.getElementById("diseaseSelect");
-
-Object.keys(diseases).forEach(disease=>{
-
-const option=document.createElement("option");
-
-option.value=disease;
-option.textContent=disease;
-
-diseaseSelect.appendChild(option);
-
-});
-
-diseaseSelect.addEventListener("change",showMedicine);
-
-function showMedicine(){
-
-    const disease = diseaseSelect.value;
+    const diseaseRows = document.getElementById("diseaseRows");
     const medicineList = document.getElementById("medicineList");
     const totalPrice = document.getElementById("totalPrice");
     const hasil = document.getElementById("hasil");
+    const historyTableBody = document.querySelector("#historyTable tbody");
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1532706114184020058/QBK_ct9S01OF1wWb7vyqM-wWekDvLFLCw0J1RpZMZPtiwq303uuv8_6CsQ8G5yVX7HK-";
 
-    medicineList.innerHTML = "";
-    hasil.value = "";
-
-    if(!disease){
-        medicineList.innerHTML = "Belum ada penyakit dipilih.";
-        totalPrice.textContent = "Total : $0";
-        return;
+    function createDiseaseRow(selectedValue = "") {
+      const row = document.createElement("div");
+      row.className = "disease-row";
+      row.innerHTML = `
+        <select class="disease-select">
+          <option value="">-- Pilih Penyakit --</option>
+          ${Object.keys(diseases).map((disease) => `<option value="${disease}" ${selectedValue === disease ? "selected" : ""}>${disease}</option>`).join("")}
+        </select>
+        <button class="btn-danger" type="button" onclick="removeDiseaseRow(this)">Hapus</button>
+      `;
+      row.querySelector("select").addEventListener("change", renderSummary);
+      return row;
     }
 
-    let total = 0;
-    let report = "";
+    function addDiseaseRow(selectedValue = "") {
+      diseaseRows.appendChild(createDiseaseRow(selectedValue));
+      renderSummary();
+    }
 
-    report += "===== DATA MEDIS =====\n\n";
-    report += "Diagnosis : " + disease + "\n\n";
-    report += "Obat yang diberikan :\n";
+    function removeDiseaseRow(button) {
+      const row = button.closest(".disease-row");
+      if (row) {
+        row.remove();
+        renderSummary();
+      }
+    }
 
-    diseases[disease].forEach(item=>{
+    function collectSelectedDiseases() {
+      return Array.from(diseaseRows.querySelectorAll(".disease-row"))
+        .map((row) => row.querySelector(".disease-select").value)
+        .filter(Boolean);
+    }
 
-        total += item.price;
+    function renderSummary() {
+      const selectedDiseases = collectSelectedDiseases();
+      medicineList.innerHTML = "";
+      hasil.value = "";
+      totalPrice.textContent = "Total : $0";
 
+      if (!selectedDiseases.length) {
+        medicineList.innerHTML = "Belum ada penyakit dipilih.";
+        return;
+      }
+
+      let total = 0;
+      let report = "===== DATA MEDIS =====\n\n";
+      report += "Daftar penyakit yang dipilih :\n";
+
+      selectedDiseases.forEach((disease, index) => {
+        const items = diseases[disease];
+        report += `${index + 1}. ${disease}\n`;
         medicineList.innerHTML += `
-        <div class="medicine">
-            <div>
-                <b>${item.name}</b><br>
-                <small>${item.qty}</small>
-            </div>
-
-            <div>
-                $${item.price}
-            </div>
-        </div>
+          <div class="medicine-block">
+            <h4>${index + 1}. ${disease}</h4>
         `;
 
-        report +=
-`${item.qty} ${item.name} ($${item.price})\n`;
-
-    });
-
-    report += "\n-----------------------\n";
-    report += "TOTAL BIAYA : $" + total;
-
-    totalPrice.textContent = "Total : $" + total;
-    hasil.value = report;
-}
-
-function copyResult(){
-
-navigator.clipboard.writeText(
-
-document.getElementById("hasil").value
-
-);
-
-alert("Berhasil disalin.");
-
-}
-
-function resetForm(){
-
-document.getElementById("pegawai").value="";
-
-document.getElementById("jabatan").value="";
-
-document.getElementById("badge").value="";
-
-document.getElementById("pasien").value="";
-
-document.getElementById("telepon").value="";
-
-document.getElementById("diseaseSelect").selectedIndex=0;
-
-showMedicine();
-
-}
-
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1532693247439274055/H231GnPYOmwaMDxecverHjIsVhrhFrOL9Nk3N_HMwCLa8qmg3KQJf_Bzly5Cm_1qJOmE";
-
-async function sendDiscord(){
-
-    const pegawai = document.getElementById("pegawai").value || "-";
-    const jabatan = document.getElementById("jabatan").value || "-";
-    const badge = document.getElementById("badge").value || "-";
-
-    const pasien = document.getElementById("pasien").value || "-";
-    const telepon = document.getElementById("telepon").value || "-";
-
-    const penyakit = document.getElementById("diseaseSelect").value || "-";
-    const total = document.getElementById("totalPrice").innerText;
-
-    if(penyakit === "-"){
-        alert("Pilih penyakit terlebih dahulu.");
-        return;
-    }
-
-    let daftarObat = "";
-    let totalHarga = 0;
-
-    diseases[penyakit].forEach(item=>{
-
-        totalHarga += item.price;
-
-        daftarObat +=
-`💊 **${item.name}**
-• Jumlah : ${item.qty}
-• Harga : $${item.price}
-
-`;
-
-    });
-
-    const tanggal = new Date().toLocaleString("id-ID");
-
-    const payload = {
-
-        username: "🏥 EMS Medical Calculator",
-
-        avatar_url: "https://i.imgur.com/8Km9tLL.png",
-
-        embeds:[{
-
-            title:"📋 LAPORAN PENANGANAN MEDIS",
-
-            description:
-            "Pendataan tindakan medis berhasil dibuat.",
-
-            color:3447003,
-
-            thumbnail:{
-                url:"https://i.imgur.com/8Km9tLL.png"
-            },
-
-            fields:[
-
-                {
-                    name:"👨‍⚕️ DATA PEGAWAI",
-                    value:
-`**Nama**
-${pegawai}
-
-**Jabatan**
-${jabatan}
-
-**Badge**
-${badge}`,
-                    inline:true
-                },
-
-                {
-                    name:"🧑 DATA PASIEN",
-                    value:
-`**Nama**
-${pasien}
-
-**Telepon**
-${telepon}`,
-                    inline:true
-                },
-
-                {
-                    name:"🩺 DIAGNOSIS",
-                    value:penyakit,
-                    inline:false
-                },
-
-                {
-                    name:"💉 PENANGANAN / OBAT",
-                    value:daftarObat,
-                    inline:false
-                },
-
-                {
-                    name:"💰 TOTAL BIAYA",
-                    value:"```"+total+"```",
-                    inline:true
-                },
-
-                {
-                    name:"📅 WAKTU PENANGANAN",
-                    value:tanggal,
-                    inline:true
-                }
-
-            ],
-
-            footer:{
-                text:"EMS Medical Calculator • RK Medical System"
-            },
-
-            timestamp:new Date().toISOString()
-
-        }]
-
-    };
-
-    try{
-
-        const response = await fetch(WEBHOOK_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(payload)
+        items.forEach((item) => {
+          total += item.price;
+          medicineList.innerHTML += `
+            <div class="medicine">
+              <div>
+                <b>${item.name}</b><br>
+                <small>${item.qty}</small>
+              </div>
+              <div>$${item.price}</div>
+            </div>
+          `;
+          report += `• ${item.qty} ${item.name} ($${item.price})\n`;
         });
 
-        if(response.ok){
+        medicineList.innerHTML += `</div>`;
+        report += "\n";
+      });
 
-            alert("✅ Berhasil dikirim ke Discord.");
+      report += "\n--------------------------------\n";
+      report += `TOTAL BIAYA : $${total}`;
 
-        }else{
-
-            alert("❌ Gagal mengirim ke Discord.");
-
-        }
-
-    }catch(error){
-
-        console.error(error);
-
-        alert("Terjadi kesalahan.");
-
+      totalPrice.textContent = `Total : $${total}`;
+      hasil.value = report;
     }
 
-}
+    function copyResult() {
+      navigator.clipboard.writeText(document.getElementById("hasil").value);
+      alert("Berhasil disalin.");
+    }
 
-showMedicine();
+    function resetForm() {
+      document.getElementById("pegawai").value = "";
+      document.getElementById("jabatan").value = "";
+      document.getElementById("badge").value = "";
+      document.getElementById("pasien").value = "";
+      document.getElementById("telepon").value = "";
+      diseaseRows.innerHTML = "";
+      addDiseaseRow();
+      renderSummary();
+    }
 
-</script>
-<script>
+    function loadHistory() {
+      const saved = JSON.parse(localStorage.getItem("medicalHistory") || "[]");
+      historyTableBody.innerHTML = "";
 
-//==============================
-// NOMOR REKAM MEDIS
-//==============================
+      if (!saved.length) {
+        historyTableBody.innerHTML = '<tr><td colspan="6">Belum ada riwayat.</td></tr>';
+        return;
+      }
 
-function generateMedicalID(){
+      saved.forEach((record) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${record.no}</td>
+          <td>${record.date}</td>
+          <td>${record.pegawai}</td>
+          <td>${record.pasien}</td>
+          <td>${record.diagnosis}</td>
+          <td>${record.total}</td>
+        `;
+        historyTableBody.appendChild(row);
+      });
+    }
 
-    const random =
-    Math.floor(Math.random()*90000)+10000;
+    function saveHistoryEntry(selectedDiseases, total) {
+      const saved = JSON.parse(localStorage.getItem("medicalHistory") || "[]");
+      const record = {
+        no: saved.length + 1,
+        date: new Date().toLocaleString("id-ID"),
+        pegawai: document.getElementById("pegawai").value || "-",
+        pasien: document.getElementById("pasien").value || "-",
+        diagnosis: selectedDiseases.join(", "),
+        total: `$${total}`
+      };
 
-    return "RM-"+random;
+      saved.unshift(record);
+      localStorage.setItem("medicalHistory", JSON.stringify(saved.slice(0, 10)));
+      loadHistory();
+    }
 
-}
+    async function sendDiscord() {
+      const selectedDiseases = collectSelectedDiseases();
+      if (!selectedDiseases.length) {
+        alert("Pilih penyakit terlebih dahulu.");
+        return;
+      }
 
-//==============================
-// TANGGAL DAN JAM
-//==============================
+      const pegawai = document.getElementById("pegawai").value || "-";
+      const jabatan = document.getElementById("jabatan").value || "-";
+      const badge = document.getElementById("badge").value || "-";
+      const pasien = document.getElementById("pasien").value || "-";
+      const telepon = document.getElementById("telepon").value || "-";
+      const total = document.getElementById("totalPrice").innerText;
 
-function getDateTime(){
+      let daftarObat = "";
+      let totalHarga = 0;
 
-    const now = new Date();
+      selectedDiseases.forEach((disease) => {
+        daftarObat += `🩺 **${disease}**\n`;
+        diseases[disease].forEach((item) => {
+          totalHarga += item.price;
+          daftarObat += `• ${item.qty} ${item.name} - $${item.price}\n`;
+        });
+        daftarObat += "\n";
+      });
 
-    return now.toLocaleString("id-ID");
+      const tanggal = new Date().toLocaleString("id-ID");
+      const payload = {
+        username: "🏥 EMS Medical Calculator",
+        avatar_url: "https://i.imgur.com/8Km9tLL.png",
+        embeds: [{
+          title: "📋 LAPORAN PENANGANAN MEDIS",
+          description: "Pendataan tindakan medis berhasil dibuat.",
+          color: 3447003,
+          thumbnail: { url: "https://i.imgur.com/8Km9tLL.png" },
+          fields: [
+            { name: "👨‍⚕️ DATA PEGAWAI", value: `**Nama**\n${pegawai}\n\n**Jabatan**\n${jabatan}\n\n**Badge**\n${badge}`, inline: true },
+            { name: "🧑 DATA PASIEN", value: `**Nama**\n${pasien}\n\n**Telepon**\n${telepon}`, inline: true },
+            { name: "🩺 DIAGNOSIS", value: selectedDiseases.join("\n"), inline: false },
+            { name: "💉 PENANGANAN / OBAT", value: daftarObat, inline: false },
+            { name: "💰 TOTAL BIAYA", value: "```" + total + "```", inline: true },
+            { name: "📅 WAKTU PENANGANAN", value: tanggal, inline: true }
+          ],
+          footer: { text: "EMS Medical Calculator • RK Medical System" },
+          timestamp: new Date().toISOString()
+        }]
+      };
 
-}
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-//==============================
-// UPDATE HASIL
-//==============================
+        if (response.ok) {
+          saveHistoryEntry(selectedDiseases, totalHarga);
+          alert("✅ Berhasil dikirim ke Discord dan tercatat.");
+        } else {
+          alert("❌ Gagal mengirim ke Discord.");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Terjadi kesalahan.");
+      }
+    }
 
-function updateSummary(){
+    document.getElementById("pegawai").addEventListener("input", renderSummary);
+    document.getElementById("jabatan").addEventListener("input", renderSummary);
+    document.getElementById("badge").addEventListener("input", renderSummary);
+    document.getElementById("pasien").addEventListener("input", renderSummary);
+    document.getElementById("telepon").addEventListener("input", renderSummary);
 
-    const penyakit =
-    document.getElementById("diseaseSelect").value;
-
-    if(!penyakit) return;
-
-    const pegawai =
-    document.getElementById("pegawai").value || "-";
-
-    const jabatan =
-    document.getElementById("jabatan").value || "-";
-
-    const badge =
-    document.getElementById("badge").value || "-";
-
-    const pasien =
-    document.getElementById("pasien").value || "-";
-
-    const telepon =
-    document.getElementById("telepon").value || "-";
-
-    let total = 0;
-
-    let text = "";
-
-    text += "=========== MEDICAL REPORT ===========\n\n";
-
-    text += "No. Rekam Medis : "
-    + generateMedicalID() + "\n";
-
-    text += "Tanggal : "
-    + getDateTime() + "\n\n";
-
-    text += "===== DATA PEGAWAI =====\n";
-
-    text += "Nama : " + pegawai + "\n";
-
-    text += "Jabatan : " + jabatan + "\n";
-
-    text += "Badge : " + badge + "\n\n";
-
-    text += "===== DATA PASIEN =====\n";
-
-    text += "Nama : " + pasien + "\n";
-
-    text += "ID : " + id + "\n";
-
-    text += "Telepon : " + telepon + "\n\n";
-
-    text += "Diagnosis : "
-    + penyakit + "\n\n";
-
-    text += "Obat :\n";
-
-    diseases[penyakit].forEach(item=>{
-
-        total += item.price;
-
-        text +=
-        "• " +
-        item.name +
-        " (" +
-        item.qty +
-        ") - $" +
-        item.price +
-        "\n";
-
-    });
-
-    text +=
-    "\n=================================\n";
-
-    text +=
-    "TOTAL BIAYA : $" + total;
-
-    document
-    .getElementById("hasil")
-    .value = text;
-
-    document
-    .getElementById("totalPrice")
-    .innerHTML =
-    "Total : $" + total;
-
-}
-
-//==============================
-// UPDATE OTOMATIS
-//==============================
-
-document
-.getElementById("pegawai")
-.addEventListener("input",updateSummary);
-
-document
-.getElementById("jabatan")
-.addEventListener("input",updateSummary);
-
-document
-.getElementById("badge")
-.addEventListener("input",updateSummary);
-
-document
-.getElementById("pasien")
-.addEventListener("input",updateSummary);
-
-document
-.getElementById("telepon")
-.addEventListener("input",updateSummary);
-
-document
-.getElementById("diseaseSelect")
-.addEventListener("change",()=>{
-
-    showMedicine();
-
-    updateSummary();
-
-});
-
-</script>
+    addDiseaseRow();
+    loadHistory();
+    renderSummary();
+  </script>
 </body>
 </html>
