@@ -329,17 +329,6 @@ placeholder="Nama Pasien">
 
 <div>
 
-<label>ID Pasien</label>
-
-<input
-type="text"
-id="idpasien"
-placeholder="000">
-
-</div>
-
-<div>
-
 <label>Nomor Telepon</label>
 
 <input
@@ -602,8 +591,6 @@ document.getElementById("badge").value="";
 
 document.getElementById("pasien").value="";
 
-document.getElementById("idpasien").value="";
-
 document.getElementById("telepon").value="";
 
 document.getElementById("diseaseSelect").selectedIndex=0;
@@ -621,7 +608,6 @@ async function sendDiscord(){
     const badge = document.getElementById("badge").value || "-";
 
     const pasien = document.getElementById("pasien").value || "-";
-    const idPasien = document.getElementById("idpasien").value || "-";
     const telepon = document.getElementById("telepon").value || "-";
 
     const penyakit = document.getElementById("diseaseSelect").value || "-";
@@ -690,9 +676,6 @@ ${badge}`,
                     value:
 `**Nama**
 ${pasien}
-
-**ID**
-${idPasien}
 
 **Telepon**
 ${telepon}`,
@@ -818,9 +801,6 @@ function updateSummary(){
     const pasien =
     document.getElementById("pasien").value || "-";
 
-    const id =
-    document.getElementById("idpasien").value || "-";
-
     const telepon =
     document.getElementById("telepon").value || "-";
 
@@ -907,10 +887,6 @@ document
 
 document
 .getElementById("pasien")
-.addEventListener("input",updateSummary);
-
-document
-.getElementById("idpasien")
 .addEventListener("input",updateSummary);
 
 document
