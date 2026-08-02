@@ -131,25 +131,60 @@
 
   <script>
     const diseases = {
-      "Water Aspiration (Aspirasi Air)": [
-        { name: "Medical Kit", qty: "1 Unit", price: 15 },
-        { name: "Cyclonamine", qty: "1 Unit", price: 5 }
-      ],
-      "Massive Trauma (Trauma Hebat)": [
-        { name: "Blood Bag 500", qty: "1 Kantong", price: 10 },
-        { name: "Suture Kit", qty: "1 Set", price: 10 },
-        { name: "Morphine", qty: "2 Ampul / Tablet", price: 10 }
-      ],
-      "Red Rash (Ruam Merah)": [
-        { name: "Disinfectant", qty: "1 Botol", price: 5 },
-        { name: "Bandage", qty: "2 Lembar / Gulung", price: 10 }
-      ],
-      "Massive Trauma Leg (Trauma Kaki)": [
-        { name: "Suture Kit", qty: "1 Set", price: 10 }
-      ],
-      "Bruise (Memar)": [
-        { name: "Ointment", qty: "1 Tub", price: 10 }
-      ]
+  "Water Aspiration": [
+    { name: "Medical Kit", qty: "1 pcs", price: 15 },
+    { name: "Cyclonamine", qty: "1 pcs", price: 5 }
+  ],
+
+  "Massive Trauma": [
+    { name: "Blood Bag (500ml)", qty: "1 Kantong", price: 5 },
+    { name: "Suture Kit", qty: "1 Set", price: 5 },
+    { name: "Morphine", qty: "2 Ampul / Tablet", price: 30 }
+  ],
+
+  "Road Rash": [
+    { name: "Disinfectant", qty: "1 pcs", price: 5 },
+    { name: "Bandage", qty: "2 pcs", price: 30 }
+  ],
+
+  "Massive Trauma Leg": [
+    { name: "Suture Kit", qty: "1 Set", price: 5 }
+  ],
+
+  "Bruise": [
+    { name: "Ointment", qty: "1 Tub", price: 5 }
+  ],
+
+  "Spinal Injury": [
+    { name: "Bandage", qty: "3 pcs", price: 45 },
+    { name: "Blood Bag (500ml)", qty: "1 Kantong", price: 5 },
+    { name: "Suture Kit", qty: "2 Set", price: 10 },
+    { name: "Morphine", qty: "2 Ampul / Tablet", price: 30 },
+    { name: "Advanced Medical Kit", qty: "1 pcs", price: 15 }
+  ],
+
+  "Broken Arm": [
+    { name: "Bandage", qty: "3 pcs", price: 45 },
+    { name: "Splint", qty: "1 pcs", price: 5 },
+    { name: "Advanced Medical Kit", qty: "1 pcs", price: 15 }
+  ],
+
+  "Broken Ribs": [
+    { name: "Bandage", qty: "3 pcs", price: 45 },
+    { name: "Splint", qty: "1 pcs", price: 5 },
+    { name: "Advanced Medical Kit", qty: "2 pcs", price: 30 }
+  ],
+
+  "Multiple Fracture": [
+    { name: "Bandage", qty: "1 pcs", price: 15 },
+    { name: "Splint", qty: "1 pcs", price: 5 },
+    { name: "Advanced Medical Kit", qty: "2 pcs", price: 30 }
+  ],
+
+  "Scraped Knee": [
+    { name: "Bandage", qty: "1 pcs", price: 15 },
+    { name: "Disinfectant", qty: "2 pcs", price: 10 }
+  ]
     };
 
     const diseaseRows = document.getElementById("diseaseRows");
@@ -157,7 +192,7 @@
     const totalPrice = document.getElementById("totalPrice");
     const hasil = document.getElementById("hasil");
     const historyTableBody = document.querySelector("#historyTable tbody");
-    const WEBHOOK_URL = "https://canary.discord.com/api/webhooks/1532706114184020058/QBK_ct9S01OF1wWb7vyqM-wWekDvLFLCw0J1RpZMZPtiwq303uuv8_6CsQ8G5yVX7HK-";
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1532693247439274055/H231GnPYOmwaMDxecverHjIsVhrhFrOL9Nk3N_HMwCLa8qmg3KQJf_Bzly5Cm_1qJOmE";
 
     function createDiseaseRow(selectedValue = "") {
       const row = document.createElement("div");
