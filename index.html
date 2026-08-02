@@ -26,6 +26,18 @@
     }
     .card h2 { margin-bottom: 12px; color: #93c5fd; font-size: 18px; }
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .result-box {
+      margin-top: 0;
+    }
+    .result-box .card {
+      margin-bottom: 0;
+    }
     input, select, textarea {
       width: 100%; padding: 13px; border: none; outline: none; border-radius: 12px;
       background: #1f2937; color: white; font-size: 14px;
@@ -103,30 +115,31 @@
       </div>
     </div>
 
-    <div class="card">
-      <h2>🩺 Diagnosis</h2>
-      <div id="diseaseRows"></div>
-      <div class="actions">
-        <button class="btn-primary" type="button" onclick="addDiseaseRow()">+ Tambah Penyakit</button>
-      </div>
-    </div>
-
-    <div class="result-box">
+    <div class="main-grid">
       <div class="card">
+        <h2>🩺 Diagnosis</h2>
+        <div id="diseaseRows"></div>
+        <div class="actions">
+          <button class="btn-primary" type="button" onclick="addDiseaseRow()">+ Tambah Penyakit</button>
+        </div>
+      </div>
 
-      <h3>Daftar Penyakit & Obat</h3>
-      <div id="medicineList">Belum ada penyakit dipilih.</div>
-      <div class="total" id="totalPrice">Total : $0</div>
-      <div class="summary-strip" id="medicineCountSummary">Total obat keluar: 0 item</div>
-      <textarea id="hasil" readonly placeholder="Ringkasan tindakan medis akan muncul di sini..."></textarea>
+      <div class="result-box">
+        <div class="card">
+          <h3>Daftar Penyakit & Obat</h3>
+          <div id="medicineList">Belum ada penyakit dipilih.</div>
+          <div class="total" id="totalPrice">Total : $0</div>
+          <div class="summary-strip" id="medicineCountSummary">Total obat keluar: 0 item</div>
+          <textarea id="hasil" readonly placeholder="Ringkasan tindakan medis akan muncul di sini..."></textarea>
 
-      <div class="actions">
-        <button class="btn-success" onclick="window.print()">Print</button>
-        <button class="btn-danger" onclick="resetForm()">Reset</button>
-        <button class="btn-dark" onclick="sendDiscord()">Discord</button>
+          <div class="actions">
+            <button class="btn-success" onclick="window.print()">Print</button>
+            <button class="btn-danger" onclick="resetForm()">Reset</button>
+            <button class="btn-dark" onclick="sendDiscord()">Discord</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
   <script>
     const diseases = {
@@ -191,7 +204,7 @@
     const totalPrice = document.getElementById("totalPrice");
     const hasil = document.getElementById("hasil");
     const historyTableBody = document.querySelector("#historyTable tbody");
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1532693247439274055/H231GnPYOmwaMDxecverHjIsVhrhFrOL9Nk3N_HMwCLa8qmg3KQJf_Bzly5Cm_1qJOmE";
+    const WEBHOOK_URL = "https://canary.discord.com/api/webhooks/1532706114184020058/QBK_ct9S01OF1wWb7vyqM-wWekDvLFLCw0J1RpZMZPtiwq303uuv8_6CsQ8G5yVX7HK-";
 
     function createDiseaseRow(selectedValue = "") {
       const row = document.createElement("div");
@@ -377,7 +390,7 @@
             { name: "💰 TOTAL BIAYA", value: "```" + total + "```", inline: true },
             { name: "📅 WAKTU PENANGANAN", value: tanggal, inline: true }
           ],
-          footer: { text: "EMS Medical Calculator • RK Medical System" },
+          footer: { text: "EMS Medical Calculator • ASE STATE MEDICAL System" },
           timestamp: new Date().toISOString()
         }]
       };
