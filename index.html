@@ -207,7 +207,7 @@
     const totalPrice = document.getElementById("totalPrice");
     const hasil = document.getElementById("hasil");
     const historyTableBody = document.querySelector("#historyTable tbody");
-    const WEBHOOK_URL = "https://discord.com/api/webhooks/1532693247439274055/H231GnPYOmwaMDxecverHjIsVhrhFrOL9Nk3N_HMwCLa8qmg3KQJf_Bzly5Cm_1qJOmE";
+    const WEBHOOK_URL = "https://discord.com/api/webhooks/1532706114184020058/QBK_ct9S01OF1wWb7vyqM-wWekDvLFLCw0J1RpZMZPtiwq303uuv8_6CsQ8G5yVX7HK-";
 
     function createDiseaseRow(selectedValue = "") {
       const row = document.createElement("div");
@@ -404,14 +404,13 @@
         });
 
         if (response.ok) {
-          saveHistoryEntry(selectedDiseases, totalHarga);
           alert("✅ Berhasil dikirim ke Discord dan tercatat.");
         } else {
           alert("❌ Gagal mengirim ke Discord.");
         }
       } catch (error) {
         console.error(error);
-        alert("Terjadi kesalahan.");
+        alert("❌ Gagal mengirim ke Discord.");
       }
     }
 
